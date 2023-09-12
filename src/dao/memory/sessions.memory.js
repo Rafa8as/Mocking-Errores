@@ -1,4 +1,4 @@
-import { hashPassword } from "../../utils/hash.utils.js";
+import { hashPassword, isValidPassword } from "../../utils/hash.utils.js";
 
 class SessionsMemoryDAO {
 	constructor() {

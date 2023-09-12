@@ -6,11 +6,14 @@
         <p>Precio: ${{product.price}} </p>
         <p>Stock: {{product.stock}} </p>
         <p>Categoria: {{product.category}} </p>
-        <a href="/api/cart/{{cart}}/product/{{product._id}}" target="_blank">Agregar al Carrito</a>
-        <a class='header-link' href='/cart/{{cart}}'>comprar</a>
-    </div>
+    </div>    
+    <form class='product-form' cart='{{cart}}' product='{{product._id}}'>
+        <input type='submit' value='Add to cart' class='product-button' />
+    </form>
+        
+</div>
 
 
     
-</div>
+
 <script src='/js/products.js'></script>

@@ -39,7 +39,7 @@ const initializePassport = () => {
 						}
 						catch (err) {
 
-							return done(null, user);
+							return done(err);
 						};
 					}
 		)

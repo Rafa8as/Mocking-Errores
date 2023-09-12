@@ -8,10 +8,11 @@ loginForm.addEventListener("submit", async (e) => {
 
 	await fetch("/api/sessions/login", {
 		method: "POST",
-		body: JSON.stringify(obj),
+		
 		headers: {
 			"Content-Type": "application/json",
 		},
+		body: JSON.stringify(obj),
 	}).then(res => {
 		if (res.status !== 200) return res.text() 
 			return res.json ()

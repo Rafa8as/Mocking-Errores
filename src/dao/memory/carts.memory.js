@@ -1,7 +1,7 @@
 import productDAO from './products.memory.js';
 
 import { faker } from '@faker-js/faker/locale/es';
-
+import logger from '../../utils/logger.util.js';
 class CartsMemoryDAO {
 	constructor() {
 		this.data = [];
@@ -21,7 +21,7 @@ class CartsMemoryDAO {
 	getCartDao(cid) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`
 			return cart;
 		} catch (error) {
@@ -50,14 +50,14 @@ class CartsMemoryDAO {
 	createProductDao(cid, pid) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`;
 
 			const products = this.products;
-			const product = products.find(product => product._id == pid);
+			const product = products.find((product) => product._id == pid);
 			if (!product) return `No product found with ID '${pid}'`;
 
-			const productInCart = cart.products.find(product => product._id == pid);
+			const productInCart = cart.products.find((product) => product._id == pid);
 			if (productInCart) {
 				productInCart.quantity += 1;
 			} else {
@@ -77,31 +77,31 @@ class CartsMemoryDAO {
 	updateCartDao(cid, newCart) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`;
 
 			const products = this.products;
 
-			newCart.forEach(product => {
+			newCart.forEach((product) => {
 				if (product.quantity < 1) {
-					console.log(
+					logger.warn(
 						`Product '${product._id}' has an invalid value of quantity. Receive '${product.quantity}', new value was setted on '1'`
 					);
 					product.quantity = 1;
 				}
 
-				const existProduct = products.find(item => item._id == product._id);
+				const existProduct = products.find((item) => item._id == product._id);
 
 				if (existProduct && existProduct.stock < product.quantity) {
 					product.quantity = existProduct.stock;
-					console.log(
+					logger.warn(
 						`Insuficient stock for product '${product._id}', new quantity setted on max stock: '${existProduct.stock}'`
 					);
 				}
 
 				if (existProduct && existProduct.stock >= product.quantity) {
 					const productInCart = cart.products.find(
-						item => item._id == product._id
+						(item) => item._id == product._id
 					);
 
 					if (!productInCart) {
@@ -125,20 +125,20 @@ class CartsMemoryDAO {
 	updateProductDao(cid, pid, newQuantity) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`;
 
 			const products = this.products;
-			const product = products.find(product => product._id == pid);
-			const productIndex = products.findIndex(item => item._id == pid);
+			const product = products.find((product) => product._id == pid);
+			const productIndex = products.findIndex((item) => item._id == pid);
 			if (!product) return `No product found with ID '${pid}'`;
 
-			const productInCart = cart.products.find(item => item._id == pid);
+			const productInCart = cart.products.find((item) => item._id == pid);
 			if (!productInCart) return `No product with ID '${pid}' was found in cart '${cid}'`
 	
 			if (newQuantity > product.stock) {
 				newQuantity = product.stock;
-				console.log(
+				logger.warn(
 					`Insuficient stock, new quantity setted on max stock: '${newQuantity}'`
 				);
 			}
@@ -153,10 +153,10 @@ class CartsMemoryDAO {
 	deleteCartDao(cid, newCart) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`;
 
-			const cartIndex = carts.findIndex(cart => cart._id == cid);
+			const cartIndex = carts.findIndex((cart) => cart._id == cid);
 			if (cartIndex !== -1) carts.splice(cartIndex, 1, newCart);
 
 			return carts[cartIndex];
@@ -168,17 +168,17 @@ class CartsMemoryDAO {
 	deleteProductDao(cid, pid) {
 		try {
 			const carts = this.data;
-			const cart = carts.find(cart => cart._id == cid);
+			const cart = carts.find((cart) => cart._id == cid);
 			if (!cart) return `No cart found with ID '${cid}'`;
 
 			const products = this.products;
-			const product = products.find(product => product._id == pid);
+			const product = products.find((product) => product._id == pid);
 			if (!product) return `No product found with ID '${pid}'`;
 
-			const productInCart = cart.products.find(item => item._id == pid);
+			const productInCart = cart.products.find((item) => item._id == pid);
 			if (!productInCart) return `No product with ID '${pid}' was found in cart '${cid}'`
 
-			const cartIndex = cart.products.findIndex(product => product._id == pid);
+			const cartIndex = cart.products.findIndex((product) => product._id == pid);
 			if (cartIndex !== -1) cart.products.splice(cartIndex, 1);
 
 			return cart;

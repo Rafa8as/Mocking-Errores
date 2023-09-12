@@ -2,12 +2,13 @@ import { Server } from "socket.io";
 
 import { messageModel } from "../dao/mongo/models/messages.model.js";
 import { productModel } from "../dao/mongo/models/product.model.js";
+import logger from "./logger.util.js";
 
 function setupSocket(httpServer) {
     const io = new Server(httpServer);
   
     io.on('connection', async (socket) => {
-      console.log(`Client ${socket.id} connected`);
+      logger.info(`Client ${socket.id} connected`);
   
      
       const products = await productModel.find().lean();

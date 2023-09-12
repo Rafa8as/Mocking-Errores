@@ -40,8 +40,8 @@ class CartsRepository {
 	async updateCart(cid, newCart) {
     try {
       return await this.dao.updateCartDao(cid, newCart);
-    } catch (erroror) {
-      return erroror;
+    } catch (error) {
+      return error;
     }
   }
 

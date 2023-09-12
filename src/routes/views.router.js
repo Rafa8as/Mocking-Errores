@@ -10,7 +10,7 @@ import {
 	chat,
 } from '../controllers/views.controller.js';
 
-import roleAuth from "../middlewares/auth.middleware.js";
+import roleAuth from "../middlewares/role.middleware.js";
 
 const router = Router ();
 
