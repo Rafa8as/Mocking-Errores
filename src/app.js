@@ -13,6 +13,7 @@ import morgan from 'morgan';
 import __dirname from "./directory.js";
 import cors from 'cors';
 import setupSocket from "./utils/socket.utils.js";
+import logger from "./utils/logger.util.js";
 
 
 
@@ -107,7 +108,7 @@ import "dotenv/config";
 */
 import { Server } from "socket.io";
 import "dotenv/config";
-const httpServer = app.listen(PORT, host, () => { console.log(`Server arriba en http://${host}: ${PORT}`); });
+const httpServer = app.listen(PORT, host, () => { logger.info(`Server arriba en http://${host}: ${PORT}`); });
 setupSocket (httpServer)
 const io = new Server(httpServer);
 /*
